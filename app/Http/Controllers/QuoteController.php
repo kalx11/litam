@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Quote;
 use App\Client;
-use phpDocumentor\Reflection\Types\Boolean;
+use App\Item;
 
 class QuoteController extends Controller
 {
@@ -19,14 +19,22 @@ class QuoteController extends Controller
     }
 
     public function store(Request $request) {
-        $client = Client::findOrFail($request->client);
-        $quote = new Quote(['total_cost' => $request->total_cost]);
-        $client->quotes()->save($quote);
+        $data = [];
+        $subtotal = 0;
         foreach($request->items_invoice as $item) {
             $id = $item['product']['id'];
+            $product = Item::findOrFail($id);
             $amount = $item['amount'];
-            $quote->items()->attach($id, ['amount' => $amount]);
+            $subtotal += $item['amount'] * $product->cost;
+            $data[$id] = ['amount' => $amount];
+            $product->update(['amount' => $product->amount - $amount]);
         }
+        $total = ($subtotal * 0.19) + $subtotal;
+        $client = Client::findOrFail($request->client);
+        $quote = new Quote(['total_cost' => $total, 'subtotal' => $subtotal]);
+        $client->quotes()->save($quote);
+
+        $quote->items()->attach($data);
         return response()->json(['created' => true], 200);
     }
 
@@ -48,12 +56,16 @@ class QuoteController extends Controller
     public function update(Request $request, Quote $quote) {
         $client = Client::find($request->client);
         $quote->client()->associate($client);
-        $quote->total_cost = $request->total_cost;
+        $subtotal = 0;
         $data = [];
         foreach($request->items_invoice as $item) {
             $id = $item['product']['id'];
+            $product = Item::findOrFail($id);
+            $subtotal += $item['amount'] * $product->cost;
             $data[$id] = ['amount' => $item['amount']];
         }
+        $total = ($subtotal * 0.19) + $subtotal;
+        $quote->update(['total_cost' => $total, 'subtotal' => $subtotal]);
         $quote->items()->sync($data);
         $quote->save();
         return response()->json(['updated' => true], 200);

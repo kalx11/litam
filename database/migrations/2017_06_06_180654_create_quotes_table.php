@@ -16,6 +16,7 @@ class CreateQuotesTable extends Migration
         Schema::create('quotes', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('total_cost', 14, 2)->unsigned();
+            $table->decimal('subtotal', 14, 2)->unsigned();
             $table->unsignedInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();

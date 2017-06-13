@@ -148,11 +148,11 @@
         <tfoot>
         <tr>
             <th colspan="4" class="right aligned colored">SUBTOTAL</th>
-            <th class="total colored"></th>
+            <th class="total colored"> @money($quote->subtotal, 'COP', true)</th>
         </tr>
         <tr>
-            <th colspan="4" class="right aligned">TAX 25%</th>
-            <th class="total"></th>
+            <th colspan="4" class="right aligned">IVA 19%</th>
+            <th class="total">@money($quote->total_cost - $quote->subtotal, 'COP', true)</th>
         </tr>
         <tr>
             <th colspan="4" class="right aligned grand total">TOTAL</th>

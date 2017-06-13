@@ -8,7 +8,8 @@ use Carbon\Carbon;
 class Quote extends Model
 {
     protected $table = "quotes";
-    protected $fillable = ['total_cost'];
+    
+    protected $fillable = ['total_cost', 'subtotal'];
 
     public function client() {
         return $this->belongsTo('App\Client');

@@ -75,7 +75,7 @@
       validateBeforeSubmit() {
         this.$validator.validateAll().then(() => {
           this.onSubmit();
-        }).catch();
+        }).catch(() => {});
       }
     },
     created() {

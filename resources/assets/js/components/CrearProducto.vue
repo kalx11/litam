@@ -17,12 +17,12 @@
         </md-input-container>
         <md-input-container :class="{ 'md-input-invalid': errors.has('amount') }">
           <label>Cantidad</label>
-          <md-input v-model.number="item.amount" data-vv-name="amount" name="amount"  v-validate="'required|numeric|not_in:0'" data-vv-as="cantidad" required></md-input>
+          <md-input v-model.number="item.amount" data-vv-name="amount" name="amount"  v-validate="'required|decimal:2|not_in:0'" data-vv-as="cantidad" required></md-input>
           <span v-show="errors.has('amount')" class="md-error"> {{ errors.first('amount') }} </span>
         </md-input-container>
         <md-input-container :class="{ 'md-input-invalid': errors.has('cost') }">
           <label>Precio</label>
-          <md-input v-model.number="item.cost" data-vv-name="cost" name="cost"  v-validate="'required|numeric|not_in:0'" data-vv-as="precio" required></md-input>
+          <md-input v-model.number="item.cost" data-vv-name="cost" name="cost"  v-validate="'required|decimal:2|not_in:0'" data-vv-as="precio" required></md-input>
           <span v-show="errors.has('cost')" class="md-error"> {{ errors.first('cost') }} </span>
         </md-input-container>
 

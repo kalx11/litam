@@ -34,8 +34,13 @@
             md-table-cell {{ !!it.product ? it.product.description : '' }}
             md-table-cell(style="width: 15%")
               input(v-model.number="it.amount" type="text" class="input")
-            md-table-cell(md-numeric) {{ !!it.product ? currency(it.product.cost) : '' }}
-            md-table-cell {{ index == (items_invoice.length - 1) ? currency(total()) : ''}}
+            md-table-cell(md-numeric)
+              p(v-if="!!it.product") {{ it.product.cost | currency}}
+            md-table-cell
+              span(v-show="index == (items_invoice.length - 1)")
+                p Subtotal: {{ subtotal_products | currency }}
+                p IVA 19%: {{ iva_products | currency }}
+                p Total: {{ total_products | currency }}
     md-dialog-actions
       md-button.md-primary(@click.native='close') Cancelar
       md-button.md-primary(@click.native='onSubmit') Editar
@@ -51,6 +56,8 @@
       template: ItemTemplate,
       client: '',
       total_cost: 0,
+      subtotal: 0,
+      iva: 0,
       clients: [],
       products: [],
       items_invoice: [],
@@ -58,14 +65,36 @@
         id: ''
       }
     }),
+    filters: {
+      currency(value) {
+        if (!value) return;
+        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s" });
+      }
+    },
+    computed: {
+      subtotal_products() {
+        let total = [];
+        Object.entries(this.items_invoice).forEach(([key, val]) => {
+          if (!!val.product) {
+            total.push(Number(val.product.cost) * val.amount);
+          }
+        });
+        this.subtotal = total.reduce((a, b) => a + b, 0);
+        return this.subtotal;
+      },
+      iva_products() {
+        this.iva = this.subtotal * 0.19;
+        return this.iva;
+      },
+      total_products() {
+        this.total_cost = this.subtotal + this.iva;
+        return this.total_cost;
+      }
+    },
     methods: {
       open(id){
         this.$refs.dialog.open();
         this.getQuote(id);
-      },
-      currency(value) {
-        if (!value) return;
-        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s" });
       },
       onSubmit() {
         let data = {
@@ -108,17 +137,6 @@
         this.items_invoice.push({
           product: '', amount: 0
         });
-      },
-      total() {
-        let total = [];
-        Object.entries(this.items_invoice).forEach(([key, val]) => {
-          if (!!val.product) {
-            total.push(Number(val.product.cost) * val.amount);
-          }
-        });
-        let value = total.reduce((a, b) => a + b, 0);
-        this.total_cost = value;
-        return value;
       },
       getQuote(id) {
         this.quote.id = id;

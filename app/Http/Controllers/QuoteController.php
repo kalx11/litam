@@ -70,4 +70,8 @@ class QuoteController extends Controller
         $quote->save();
         return response()->json(['updated' => true], 200);
     }
+    public function destroy($id) {
+        $result = Quote::findOrFail($id)->delete();
+        return response()->json(['deleted' => $result], 200);
+    }
 }

@@ -147,9 +147,11 @@
           showCancelButton: true,
           confirmButtonText: 'Si, eliminalo'
         }).then(function () {
-          axios.delete(`items/${id}`).then(() => {
-            swal('Deleted!', 'Cotización eliminad', 'success');
+          axios.delete(`quotes/${id}`).then(() => {
+            swal('Eliminado!', 'Cotización eliminada', 'success');
             self.getUsers();
+          }).catch( () => {
+            swal("Error", "Hubo un problema al borrar esta cotizacion", "error");
           });
         });
       },

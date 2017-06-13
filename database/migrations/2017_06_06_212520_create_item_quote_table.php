@@ -18,8 +18,8 @@ class CreateItemQuoteTable extends Migration
             $table->unsignedInteger('amount');
             $table->integer('item_id')->unsigned();
             $table->integer('quote_id')->unsigned();
-            $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('quote_id')->references('id')->on('quotes');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('quote_id')->references('id')->on('quotes')->onDelete('cascade');
             $table->timestamps();
         });
     }

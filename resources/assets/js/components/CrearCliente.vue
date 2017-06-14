@@ -15,6 +15,11 @@
           <md-input v-model="client.surname" data-vv-name="surname" name="surname"  v-validate="'required'" data-vv-as="apellido"></md-input>
           <span v-show="errors.has('surname')" class="md-error"> {{ errors.first('surname') }} </span>
         </md-input-container>
+        <md-input-container :class="{ 'md-input-invalid': errors.has('email') }">
+          <label>Correo electrónico</label>
+          <md-input v-model="client.email" data-vv-name="email" name="email"  v-validate="'required|email'" data-vv-as="correo electrónico"></md-input>
+          <span v-show="errors.has('email')" class="md-error"> {{ errors.first('email') }} </span>
+        </md-input-container>
         <md-input-container :class="{ 'md-input-invalid': errors.has('phone') }">
           <label>Teléfono</label>
           <md-input v-model="client.phone" data-vv-name="phone" name="phone"  v-validate="'required|numeric'" data-vv-as="telefono"></md-input>
@@ -60,6 +65,7 @@
       client: {
         name: '',
         surname: '',
+        email: '',
         address: '',
         type: '',
         code: '',

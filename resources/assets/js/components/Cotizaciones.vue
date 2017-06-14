@@ -58,7 +58,7 @@
       <md-table-body>
         <md-table-row v-for="(row, index) in items" :key="index">
           <md-table-cell md-numeric v-show="showPDF">
-            <md-button class="md-icon-button" :href="'/pdf/' + row.id">
+            <md-button class="md-icon-button" @click.native.prevent="click(row.id)">
               <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
             </md-button>
           </md-table-cell>
@@ -72,6 +72,7 @@
               </md-button>
 
               <md-menu-content>
+                <md-menu-item>Facturar</md-menu-item>
                 <md-menu-item @click.native.prevent="$refs.editItem.open(row.id)">Editar</md-menu-item>
                 <md-menu-item @click.native.prevent="deleteItem(row.id)">Borrar</md-menu-item>
               </md-menu-content>
@@ -121,10 +122,14 @@
     filters: {
       currency(value) {
         if(!value) return;
-        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s" });
+        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s", thousand: '.', decimal: ',' });
       }
     },
     methods: {
+      click(id) {
+        let tab = open('/pdf/' + id);
+        tab.focus();
+      },
       openDialog() { this.$refs.createDialog.$refs.dialog1.open() },
       getUsers() {
         axios.get(`/quotes?page=${this.page}&search=${this.search}`).then(({data}) => {

@@ -30,6 +30,7 @@ class ClientRequest extends FormRequest
             'phone' => 'required|numeric',
             'city' => 'required|string',
             'code' => 'required',
+            'email' => 'required|email',
             'type' => 'required|in:nit,cedula'
         ];
     }

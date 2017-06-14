@@ -118,8 +118,6 @@
         <div id="company" class="clearfix">
             <div>Litam</div>
             <div>Bogotá D.C</div>
-            <div>(602) 519-0450</div>
-            <div><a href="mailto:company@example.com">company@example.com</a></div>
         </div>
     </div>
 </header>

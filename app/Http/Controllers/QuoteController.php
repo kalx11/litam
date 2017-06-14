@@ -27,14 +27,14 @@ class QuoteController extends Controller
             $amount = $item['amount'];
             $subtotal += $item['amount'] * $product->cost;
             $data[$id] = ['amount' => $amount];
-            $product->update(['amount' => $product->amount - $amount]);
+        //    $product->update(['amount' => $product->amount - $amount]);
         }
         $total = ($subtotal * 0.19) + $subtotal;
         $client = Client::findOrFail($request->client);
         $quote = new Quote(['total_cost' => $total, 'subtotal' => $subtotal]);
         $client->quotes()->save($quote);
-
         $quote->items()->attach($data);
+        $quote->save();
         return response()->json(['created' => true], 200);
     }
 

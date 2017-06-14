@@ -17,6 +17,7 @@ class CreateClientsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('surname')->default(null)->nullable();
+            $table->string('email');
             $table->string('city');
             $table->string('phone');
             $table->string('address');

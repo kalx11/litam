@@ -44,6 +44,7 @@
           <md-table-head md-numeric>#</md-table-head>
           <md-table-head>Nombre/Razón social</md-table-head>
           <md-table-head>Apellido</md-table-head>
+          <md-table-head>Email</md-table-head>
           <md-table-head>Nit/Cédula</md-table-head>
           <md-table-head>Teléfono</md-table-head>
           <md-table-head>Ciudad</md-table-head>
@@ -57,6 +58,7 @@
           <md-table-cell md-numeric>{{ row.id }}</md-table-cell>
           <md-table-cell>{{ row.name }}</md-table-cell>
           <md-table-cell>{{ row.surname }}</md-table-cell>
+          <md-table-cell>{{ row.email }}</md-table-cell>
           <md-table-cell>{{ row.code }}</md-table-cell>
           <md-table-cell>{{ row.phone }}</md-table-cell>
           <md-table-cell>{{ row.city }}</md-table-cell>

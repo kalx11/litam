@@ -12,19 +12,19 @@
   "devDependencies": {
     "axios": "^0.15.3",
     "cross-env": "^3.2.3",
-    "laravel-mix": "0.*",
+    "laravel-mix": "^0.12.1",
     "lodash": "^4.17.4",
     "pug": "^2.0.0-rc.2",
-    "purify-css": "^1.2.2",
+    "purify-css": "^1.2.6",
     "purifycss-webpack": "^0.7.0",
-    "vue": "^2.1.10"
+    "vue": "^2.3.3"
   },
   "dependencies": {
     "accounting": "^0.4.1",
-    "bulma": "^0.4.1",
+    "bulma": "^0.4.2",
     "font-awesome": "^4.7.0",
     "numeral": "^2.0.6",
-    "sweetalert2": "^6.6.4",
+    "sweetalert2": "^6.6.5",
     "v-autocomplete": "^1.2.0",
     "vee-validate": "^2.0.0-rc.5",
     "vue-instant": "^1.0.0",

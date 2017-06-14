@@ -111,7 +111,7 @@
     filters: {
       currency(value) {
         if(!value) return;
-        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s" });
+        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s", thousand: '.', decimal: ',' });
       }
     },
     methods: {

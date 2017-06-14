@@ -9,6 +9,7 @@ $factory->define(App\Client::class, function (Faker\Generator $faker) {
         'address' => $faker->address,
         'code' => $faker->randomNumber(5),
         'city' => $faker->city,
+        'email' => $faker->unique()->safeEmail,
         'phone' => $faker->randomNumber(5)
     ];
 });

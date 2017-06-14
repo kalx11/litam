@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     protected $fillable = ['name', 'surname', 'type', 'address',
-        'code', 'city', 'phone'];
+        'code', 'city', 'phone', 'email'];
 
 
     public function scopeSearch($query, $search) {

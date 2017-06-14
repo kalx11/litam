@@ -27,7 +27,7 @@ class ClientController extends Controller
         if($request->has('page')) {
             return Client::Search($request->search)->paginate(15);
         } else {
-            return Client::Search($request->search)->get(['id', 'name', 'surname']);
+            return Client::Search($request->search)->get(['id', 'name', 'surname', 'email']);
         }
     }
 

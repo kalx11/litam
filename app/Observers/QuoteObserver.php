@@ -10,7 +10,7 @@ use Storage;
 
 class QuoteObserver
 {
-    public function created(Quote $quote) {
+    public function saved(Quote $quote) {
         $this->makePdf($quote);
     }
 
@@ -26,7 +26,7 @@ class QuoteObserver
     private function makePdf(Quote $quote) {
         $fileName  = str_slug('Cotizacion ' . $quote->id) . '.pdf';
         $path = storage_path('app/pdf/' . $fileName);
-        $data = ['quote' => $quote->load('client:id,name,surname,address', 'items')];
+        $data = ['quote' => $quote->load('client:id,name,surname,address, email', 'items')];
         PDF::loadView('pdf.invoice', $data)->setPaper('a4', 'landscape')->save($path);
     }
 }

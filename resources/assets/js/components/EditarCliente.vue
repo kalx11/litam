@@ -13,6 +13,10 @@
           <md-input v-model="row.surname"></md-input>
         </md-input-container>
         <md-input-container>
+          <label>Correo electrónico</label>
+          <md-input v-model="row.email"></md-input>
+        </md-input-container>
+        <md-input-container>
           <label>Télefono</label>
           <md-input v-model="row.phone"></md-input>
         </md-input-container>
@@ -64,6 +68,8 @@
           swal('Correcto', 'Cliente actualizado correctamente', 'success');
           this.$refs.dialog.close();
           this.$emit('done');
+        }).catch( () => {
+          swal('Error', 'Problema al actualizar el cliente', 'error');
         });
       }
     }

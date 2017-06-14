@@ -51,6 +51,7 @@
   import axios from 'axios';
   import ItemTemplate from './../utils/Item.vue'
   import accounting from 'accounting';
+  import swal from 'sweetalert2';
   export default {
     data: () => ({
       template: ItemTemplate,
@@ -73,7 +74,7 @@
     filters: {
       currency(value) {
         if (!value) return;
-        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s" });
+        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s", thousand: '.', decimal: ',' });
       }
     },
     computed: {
@@ -109,6 +110,9 @@
           this.$refs.dialog1.close();
           this.$emit('done');
           this.reset();
+          swal('Operación exitosa', 'Cotización creada correctamente', 'success');
+        }).catch( () => {
+          swal('Error!', 'Hubo un problema al crear la cotización', 'error');
         });
       },
       reset() {

@@ -50,20 +50,25 @@
                             <img src="{{ asset('images/litam.png') }}" alt="Litam" class="image">
                         </a>
                     </div>
-                    <span class="nav-toggle">
+                    <span class="nav-toggle" :class="{ 'is-active':menu }" v-on:click="menu = !menu">
             <span></span>
             <span></span>
             <span></span>
           </span>
-                    <div class="nav-right nav-menu is-hidden-tablet">
-                        <a href="#" class="nav-item is-active">
+                    <div class="nav-right nav-menu is-hidden-tablet" :class="{ 'is-active':menu }">
+                        <a href="{{ route('home') }}" class="nav-item is-active">
                             Inicio
                         </a>
                         <a href="{{ route('productos') }}" class="nav-item">
                             Productos
                         </a>
-                        <a href="{{ route('logout') }}" class="nav-item">
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a href="{{ route('clientes') }}" class="nav-item">
+                            Clientes
+                        </a>
+                        <a href="{{ route('cotizacion') }}" class="nav-item">
+                            Cotizaciones
+                        </a>
+                        <a href="{{ route('logout') }}" class="nav-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Salir
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -69,4 +69,3 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('invoices', 'InvoiceController@index');
 });
-

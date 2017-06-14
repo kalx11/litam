@@ -7,6 +7,7 @@ use App\Quote;
 use PDF;
 use DB;
 use Storage;
+use Carbon\Carbon;
 
 class QuoteObserver
 {
@@ -24,9 +25,10 @@ class QuoteObserver
         }
     }
     private function makePdf(Quote $quote) {
+        Carbon::setLocale('es');
         $fileName  = str_slug('Cotizacion ' . $quote->id) . '.pdf';
         $path = storage_path('app/pdf/' . $fileName);
         $data = ['quote' => $quote->load('client:id,name,surname,address,email', 'items')];
-        PDF::loadView('pdf.invoice', $data)->setPaper('a4', 'landscape')->save($path);
+        PDF::loadView('pdf.invoice2', $data)->setPaper('a4', 'portrait')->save($path);
     }
 }

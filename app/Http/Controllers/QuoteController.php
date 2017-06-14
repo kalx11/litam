@@ -14,8 +14,8 @@ class QuoteController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() {
-        return Quote::with('client:id,name,surname')->paginate(15);
+    public function index(Request $request) {
+        return Quote::Search($request->search, 'quote')->paginate(15);
     }
 
     public function store(Request $request) {
@@ -71,7 +71,27 @@ class QuoteController extends Controller
         return response()->json(['updated' => true], 200);
     }
     public function destroy($id) {
-        $result = Quote::findOrFail($id)->delete();
-        return response()->json(['deleted' => $result], 200);
+        Quote::findOrFail($id)->delete();
+        return response()->json(['deleted' => true], 200);
+    }
+
+    /**
+     * Factura las cotizaciones
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function bill($id) {
+        $quote = Quote::with('items')->findOrFail($id);
+        if($quote->status === 'quote') {
+            $quote->update(['status' => 'invoice']);
+            foreach($quote->items as $product) {
+                $amount = $product->pivot->amount;
+                $product->amount -= $amount;
+                $product->save();
+            }
+            return response()->json(['billed' => true], 200);
+        }
+        return response()->json(['billed' => false], 422);
     }
 }

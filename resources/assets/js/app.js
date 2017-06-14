@@ -15,20 +15,12 @@ Vue.component('users', () => System.import('./components/Usuarios.vue'));
 Vue.component('productos', () => System.import('./components/Productos.vue'));
 Vue.component('clients', () => System.import('./components/Clientes.vue'));
 Vue.component('cotizaciones', () => System.import('./components/Cotizaciones.vue'));
+Vue.component('facturas', () => System.import('./components/Facturas.vue'));
 
 const app = new Vue({
     el: '#app',
     data: {
       menu: false
-    },
-    created() {
-      let burger = document.querySelector('.nav-toggle');
-      let menu = document.querySelector('.nav-menu');
-      console.log(burger, menu);
-      burger.addEventListener('click', function() {
-        burger.classList.toggle('is-active');
-        menu.classList.toggle('is-active');
-      });
     }
 });
 

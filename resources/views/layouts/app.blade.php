@@ -37,7 +37,7 @@
                         <span class="icon"><i class="fa fa-file-text" aria-hidden="true"></i></span>
                         <span class="name">Cotización</span>
                     </a>
-                    <a href="" class="item">
+                    <a href="{{ route('facturas') }}" class="item @active('facturas')">
                         <span class="icon"><i class="fa fa-money" aria-hidden="true"></i></span>
                         <span class="name">Facturas</span>
                     </a>
@@ -72,7 +72,7 @@
                         <a href="{{ route('cotizacion') }}" class="nav-item">
                             Cotizaciones
                         </a>
-                        <a href="" class="nav-item">
+                        <a href="{{ route('facturas') }}" class="nav-item">
                             Facturas
                         </a>
                         <a href="{{ route('logout') }}" class="nav-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -72,7 +72,7 @@
               </md-button>
 
               <md-menu-content>
-                <md-menu-item>Facturar</md-menu-item>
+                <md-menu-item @click.native.prevent="bill(row.id)">Facturar</md-menu-item>
                 <md-menu-item @click.native.prevent="$refs.editItem.open(row.id)">Editar</md-menu-item>
                 <md-menu-item @click.native.prevent="deleteItem(row.id)">Borrar</md-menu-item>
               </md-menu-content>
@@ -86,10 +86,12 @@
       <div class="level-left">
         <div class="level-item">
           <p class="control">
-            <md-button @click.native.prevent="previous" :disabled="page<=1" class="button"><i class="fa fa-angle-double-left"></i></md-button>
+            <md-button @click.native.prevent="previous" :disabled="page<=1" class="button"><i
+                    class="fa fa-angle-double-left"></i></md-button>
           </p>
           <p class="control">
-            <md-button :disabled="page >= last_page || last_page === 0" @click.native.prevent="next" class="button"><i class="fa fa-angle-double-right"></i></md-button>
+            <md-button :disabled="page >= last_page || last_page === 0" @click.native.prevent="next" class="button"><i
+                    class="fa fa-angle-double-right"></i></md-button>
           </p>
         </div>
       </div>
@@ -101,7 +103,7 @@
 
 <script>
   import axios from 'axios';
-  import { default as swal } from 'sweetalert2';
+  import {default as swal} from 'sweetalert2';
   import numeral from 'numeral';
   import accounting from 'accounting';
 
@@ -121,8 +123,8 @@
     }),
     filters: {
       currency(value) {
-        if(!value) return;
-        return accounting.formatMoney(value, { symbol: "$",  format: "%v %s", thousand: '.', decimal: ',' });
+        if (!value) return;
+        return accounting.formatMoney(value, {symbol: "$", format: "%v %s", thousand: '.', decimal: ','});
       }
     },
     methods: {
@@ -130,7 +132,9 @@
         let tab = open('/pdf/' + id);
         tab.focus();
       },
-      openDialog() { this.$refs.createDialog.$refs.dialog1.open() },
+      openDialog() {
+        this.$refs.createDialog.$refs.dialog1.open()
+      },
       getUsers() {
         axios.get(`/quotes?page=${this.page}&search=${this.search}`).then(({data}) => {
           this.search = '';
@@ -151,31 +155,51 @@
           type: 'warning',
           showCancelButton: true,
           confirmButtonText: 'Si, eliminalo'
-        }).then(function () {
+        }).then(() => {
           axios.delete(`quotes/${id}`).then(() => {
             swal('Eliminado!', 'Cotización eliminada', 'success');
-            self.getUsers();
-          }).catch( () => {
+            this.getUsers();
+          }).catch(() => {
             swal("Error", "Hubo un problema al borrar esta cotizacion", "error");
           });
         });
       },
       searchInput() {
+        this.page = 1;
         this.getUsers();
         this.search = '';
 
       },
       next() {
-        if(this.page<this.last_page || last_page === 0) {
+        if (this.page < this.last_page || last_page === 0) {
           this.page++;
           this.getUsers();
         }
       },
       previous() {
-        if(this.page>1) {
+        if (this.page > 1) {
           this.page--;
           this.getUsers();
         }
+      },
+      bill(id) {
+        swal({
+          title: "¿Estas seguro?",
+          text: "Facturaras esta cotización",
+          type: "warning",
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Si, facturar"
+        }).then(() => {
+          console.log('Funciona');
+          axios.post(`/quotes/${id}/bill`).then(() => {
+            swal('Éxito!', 'Facturado correctamente', 'success');
+            this.getUsers();
+          })
+            .catch(() => swal("Error!", "Hubo problemas al facturar.", "error"));
+        });
+
       }
     },
     created() {

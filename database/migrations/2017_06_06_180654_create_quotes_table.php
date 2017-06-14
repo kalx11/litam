@@ -15,6 +15,7 @@ class CreateQuotesTable extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->increments('id');
+            $table->enum('status', ['quote', 'invoice'])->default('quote');
             $table->decimal('total_cost', 14, 2)->unsigned();
             $table->decimal('subtotal', 14, 2)->unsigned();
             $table->unsignedInteger('client_id');

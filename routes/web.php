@@ -47,14 +47,26 @@ Route::group(['middleware' => 'auth'], function () {
         return view('cotizacion');
     })->name('cotizacion');
 
+    Route::get('/facturas', function() {
+        return view('facturas');
+    })->name('facturas');
+
     // Resources routes
     Route::resource('users', 'UserController', ['except' => ['show', 'edit']]);
     Route::resource('items', 'ItemController', ['except' => ['show', 'edit']]);
     Route::resource('clients', 'ClientController', ['except' => ['show', 'edit']]);
     Route::resource('quotes', 'QuoteController');
 
+    // PDF
     Route::get('/pdf/{id}', function($id) {
         return response()->file(storage_path("app/pdf/cotizacion-{$id}.pdf"));
     });
+
+    // Bill
+    Route::post('quotes/{id}/bill', 'QuoteController@bill');
+
+    // Invoices
+
+    Route::get('invoices', 'InvoiceController@index');
 });
 

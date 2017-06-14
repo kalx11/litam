@@ -1,4 +1,39 @@
-webpackJsonp([13],{
+webpackJsonp([14],{
+
+/***/ 42:
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(45)(
+  /* script */
+  __webpack_require__(53),
+  /* template */
+  __webpack_require__(76),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/ignacio/proyectos/descon/resources/assets/js/components/Cotizaciones.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Cotizaciones.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2fded902", Component.options)
+  } else {
+    hotAPI.reload("data-v-2fded902", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 
 /***/ 45:
 /***/ (function(module, exports) {
@@ -2128,6 +2163,243 @@ if (window.Sweetalert2) window.sweetAlert = window.swal = window.Sweetalert2;
 
 /***/ }),
 
+/***/ 53:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert2__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_numeral__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_numeral___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_numeral__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_accounting__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_accounting___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_accounting__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    'cotizacion-create': function cotizacionCreate() {
+      return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 67));
+    },
+    'cotizacion-edit': function cotizacionEdit() {
+      return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 71));
+    }
+  },
+  data: function data() {
+    return {
+      items: {},
+      showPDF: false,
+      total: 0,
+      page: 1,
+      last_page: 1,
+      search: '',
+      isEditing: false
+    };
+  },
+  filters: {
+    currency: function currency(value) {
+      if (!value) return;
+      return __WEBPACK_IMPORTED_MODULE_3_accounting___default.a.formatMoney(value, { symbol: "$", format: "%v %s", thousand: '.', decimal: ',' });
+    }
+  },
+  methods: {
+    click: function click(id) {
+      var tab = open('/pdf/' + id);
+      tab.focus();
+    },
+    openDialog: function openDialog() {
+      this.$refs.createDialog.$refs.dialog1.open();
+    },
+    getUsers: function getUsers() {
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/quotes?page=' + this.page + '&search=' + this.search).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.search = '';
+        _this.items = data.data;
+        _this.total = data.total;
+        _this.page = data.current_page;
+        _this.last_page = data.last_page;
+      });
+    },
+    reload: function reload() {
+      this.search = '';
+      this.getUsers();
+    },
+    deleteItem: function deleteItem(id) {
+      var _this2 = this;
+
+      var self = this;
+      __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()({
+        text: "¿Quieres eliminar esta cotización?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminalo'
+      }).then(function () {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('quotes/' + id).then(function () {
+          __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()('Eliminado!', 'Cotización eliminada', 'success');
+          _this2.getUsers();
+        }).catch(function () {
+          __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()("Error", "Hubo un problema al borrar esta cotizacion", "error");
+        });
+      });
+    },
+    searchInput: function searchInput() {
+      this.page = 1;
+      this.getUsers();
+      this.search = '';
+    },
+    next: function next() {
+      if (this.page < this.last_page || last_page === 0) {
+        this.page++;
+        this.getUsers();
+      }
+    },
+    previous: function previous() {
+      if (this.page > 1) {
+        this.page--;
+        this.getUsers();
+      }
+    },
+    bill: function bill(id) {
+      var _this3 = this;
+
+      __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()({
+        title: "¿Estas seguro?",
+        text: "Facturaras esta cotización",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, facturar"
+      }).then(function () {
+        console.log('Funciona');
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/quotes/' + id + '/bill').then(function () {
+          __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()('Éxito!', 'Facturado correctamente', 'success');
+          _this3.getUsers();
+        }).catch(function () {
+          return __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()("Error!", "Hubo problemas al facturar.", "error");
+        });
+      });
+    }
+  },
+  created: function created() {
+    this.getUsers();
+  }
+});
+
+/***/ }),
+
 /***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3152,216 +3424,7 @@ return numeral;
 
 /***/ }),
 
-/***/ 96:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(45)(
-  /* script */
-  __webpack_require__(97),
-  /* template */
-  __webpack_require__(98),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/home/ignacio/proyectos/descon/resources/assets/js/components/Facturas.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Facturas.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-53f1b47f", Component.options)
-  } else {
-    hotAPI.reload("data-v-53f1b47f", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 97:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert2__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_numeral__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_numeral___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_numeral__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_accounting__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_accounting___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_accounting__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  /*components: {
-    'cotizacion-create': () => System.import('./CrearCotizacion.vue'),
-    'cotizacion-edit': () => System.import('./EditarCotizacion.vue')
-  },*/
-  data: function data() {
-    return {
-      items: {},
-      showPDF: false,
-      total: 0,
-      page: 1,
-      last_page: 1,
-      search: ''
-    };
-  },
-  filters: {
-    currency: function currency(value) {
-      if (!value) return;
-      return __WEBPACK_IMPORTED_MODULE_3_accounting___default.a.formatMoney(value, { symbol: "$", format: "%v %s", thousand: '.', decimal: ',' });
-    }
-  },
-  methods: {
-    click: function click(id) {
-      var tab = open('/pdf/' + id);
-      tab.focus();
-    },
-
-    //openDialog() { this.$refs.createDialog.$refs.dialog1.open() },
-    getUsers: function getUsers() {
-      var _this = this;
-
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/invoices?page=' + this.page + '&search=' + this.search).then(function (_ref) {
-        var data = _ref.data;
-
-        _this.search = '';
-        _this.items = data.data;
-        _this.total = data.total;
-        _this.page = data.current_page;
-        _this.last_page = data.last_page;
-      });
-    },
-    reload: function reload() {
-      this.search = '';
-      this.getUsers();
-    },
-
-    /*deleteItem(id) {
-      let self = this;
-      swal({
-        text: "¿Quieres eliminar esta cotización?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Si, eliminalo'
-      }).then(function () {
-        axios.delete(`quotes/${id}`).then(() => {
-          swal('Eliminado!', 'Cotización eliminada', 'success');
-          self.getUsers();
-        }).catch( () => {
-          swal("Error", "Hubo un problema al borrar esta cotizacion", "error");
-        });
-      });
-    },*/
-    searchInput: function searchInput() {
-      this.page = 1;
-      this.getUsers();
-      this.search = '';
-    },
-    next: function next() {
-      if (this.page < this.last_page || last_page === 0) {
-        this.page++;
-        this.getUsers();
-      }
-    },
-    previous: function previous() {
-      if (this.page > 1) {
-        this.page--;
-        this.getUsers();
-      }
-    }
-  },
-  created: function created() {
-    this.getUsers();
-  }
-});
-
-/***/ }),
-
-/***/ 98:
+/***/ 76:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3373,7 +3436,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "level-item"
   }, [_c('p', {
     staticClass: "subtitle is-5"
-  }, [_c('strong', [_vm._v(_vm._s(_vm.total))]), _vm._v(" Facturas")])]), _c('div', {
+  }, [_c('strong', [_vm._v(_vm._s(_vm.total))]), _vm._v(" cotizaciones\n        ")])]), _vm._v(" "), _c('div', {
     staticClass: "level-item"
   }, [_c('div', {
     staticClass: "field has-addons"
@@ -3389,7 +3452,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "input",
     attrs: {
       "type": "text",
-      "placeholder": "Encuentra una factura"
+      "placeholder": "Encuentra una cotización"
     },
     domProps: {
       "value": (_vm.search)
@@ -3400,14 +3463,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.search = $event.target.value
       }
     }
-  })]), _c('p', {
+  })]), _vm._v(" "), _c('p', {
     staticClass: "control"
   }, [_c('button', {
     staticClass: "button",
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.searchInput($event)
+        _vm.searchInput()
       }
     }
   }, [_c('i', {
@@ -3415,14 +3478,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])]), _c('p', {
+  })])]), _vm._v(" "), _c('p', {
     staticClass: "control"
   }, [_c('button', {
     staticClass: "button",
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.reload($event)
+        _vm.reload()
       }
     }
   }, [_c('i', {
@@ -3430,7 +3493,38 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])]), _c('p', {
+  })])]), _vm._v(" "), _c('p', {
+    staticClass: "control"
+  }, [_c('button', {
+    staticClass: "button",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.openDialog($event)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('p', {
+    staticClass: "control"
+  }, [_c('button', {
+    staticClass: "button",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.isEditing = !_vm.isEditing
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa",
+    class: _vm.isEditing ? 'fa-pencil-square' : 'fa-pencil-square-o',
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('p', {
     staticClass: "control"
   }, [_c('button', {
     staticClass: "button",
@@ -3446,18 +3540,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])])])])])]), _c('md-table', [_c('md-table-header', [_c('md-table-row', [_c('md-table-head', {
+  })])])])])])]), _vm._v(" "), _c('md-table', [_c('md-table-header', [_c('md-table-row', [_c('md-table-head', {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: (_vm.showPDF),
       expression: "showPDF"
     }]
-  }), _c('md-table-head', {
+  }), _vm._v(" "), _c('md-table-head', {
     attrs: {
       "md-numeric": ""
     }
-  }, [_vm._v("#")]), _c('md-table-head', [_vm._v("Cliente")]), _c('md-table-head', [_vm._v("Fecha")]), _c('md-table-head', [_vm._v("Precio")])], 1)], 1), _c('md-table-body', _vm._l((_vm.items), function(row, index) {
+  }, [_vm._v("#")]), _vm._v(" "), _c('md-table-head', [_vm._v("Cliente")]), _vm._v(" "), _c('md-table-head', [_vm._v("Fecha")]), _vm._v(" "), _c('md-table-head', [_vm._v("Precio")]), _vm._v(" "), _c('md-table-head', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.isEditing),
+      expression: "isEditing"
+    }]
+  })], 1)], 1), _vm._v(" "), _c('md-table-body', _vm._l((_vm.items), function(row, index) {
     return _c('md-table-row', {
       key: index
     }, [_c('md-table-cell', {
@@ -3483,12 +3584,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "aria-hidden": "true"
       }
-    })])], 1), _c('md-table-cell', {
+    })])], 1), _vm._v(" "), _c('md-table-cell', {
       attrs: {
         "md-numeric": ""
       }
-    }, [_vm._v(_vm._s(row.id))]), _c('md-table-cell', [_vm._v(_vm._s(row.client.name + ' ' + row.client.surname))]), _c('md-table-cell', [_vm._v(_vm._s(row.created_at))]), _c('md-table-cell', [_vm._v(_vm._s(_vm._f("currency")(row.total_cost)))])], 1)
-  }))], 1), _c('nav', {
+    }, [_vm._v(_vm._s(row.id))]), _vm._v(" "), _c('md-table-cell', [_vm._v(_vm._s(row.client.name + ' ' + row.client.surname))]), _vm._v(" "), _c('md-table-cell', [_vm._v(_vm._s(row.created_at))]), _vm._v(" "), _c('md-table-cell', [_vm._v(_vm._s(_vm._f("currency")(row.total_cost)))]), _vm._v(" "), _c('md-table-cell', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (_vm.isEditing),
+        expression: "isEditing"
+      }]
+    }, [_c('md-menu', [_c('md-button', {
+      staticClass: "md-icon-button",
+      attrs: {
+        "md-menu-trigger": ""
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-pencil",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    })]), _vm._v(" "), _c('md-menu-content', [_c('md-menu-item', {
+      nativeOn: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.bill(row.id)
+        }
+      }
+    }, [_vm._v("Facturar")]), _vm._v(" "), _c('md-menu-item', {
+      nativeOn: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.$refs.editItem.open(row.id)
+        }
+      }
+    }, [_vm._v("Editar")]), _vm._v(" "), _c('md-menu-item', {
+      nativeOn: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.deleteItem(row.id)
+        }
+      }
+    }, [_vm._v("Borrar")])], 1)], 1)], 1)], 1)
+  }))], 1), _vm._v(" "), _c('nav', {
     staticClass: "level"
   }, [_c('div', {
     staticClass: "level-left"
@@ -3509,7 +3648,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-angle-double-left"
-  })])], 1), _c('p', {
+  })])], 1), _vm._v(" "), _c('p', {
     staticClass: "control"
   }, [_c('md-button', {
     staticClass: "button",
@@ -3524,13 +3663,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-angle-double-right"
-  })])], 1)])])])], 1)
+  })])], 1)])])]), _vm._v(" "), _c('cotizacion-create', {
+    ref: "createDialog",
+    on: {
+      "done": _vm.getUsers
+    }
+  }), _vm._v(" "), _c('cotizacion-edit', {
+    ref: "editItem",
+    on: {
+      "done": _vm.getUsers
+    }
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-53f1b47f", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-2fded902", module.exports)
   }
 }
 

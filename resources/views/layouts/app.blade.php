@@ -37,6 +37,10 @@
                         <span class="icon"><i class="fa fa-file-text" aria-hidden="true"></i></span>
                         <span class="name">Cotización</span>
                     </a>
+                    <a href="" class="item">
+                        <span class="icon"><i class="fa fa-money" aria-hidden="true"></i></span>
+                        <span class="name">Facturas</span>
+                    </a>
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="item"><span class="icon"><i class="fa fa-sign-out"></i></span><span class="name">Salir</span></a>
                 </div>
             </div>
@@ -67,6 +71,9 @@
                         </a>
                         <a href="{{ route('cotizacion') }}" class="nav-item">
                             Cotizaciones
+                        </a>
+                        <a href="" class="nav-item">
+                            Facturas
                         </a>
                         <a href="{{ route('logout') }}" class="nav-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Salir

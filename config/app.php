@@ -179,6 +179,7 @@ return [
         // Providers personalizados
         Barryvdh\DomPDF\ServiceProvider::class,
         ClickNow\Money\MoneyServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
     ],
 
     /*
@@ -228,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Date' => Jenssegers\Date\Date::class,
 
     ],
 

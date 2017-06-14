@@ -7,7 +7,7 @@ use App\Quote;
 use PDF;
 use DB;
 use Storage;
-use Carbon\Carbon;
+use Jenssegers\Date\Date;
 
 class QuoteObserver
 {
@@ -25,7 +25,7 @@ class QuoteObserver
         }
     }
     private function makePdf(Quote $quote) {
-        Carbon::setLocale('es');
+        Date::setLocale('es');
         $fileName  = str_slug('Cotizacion ' . $quote->id) . '.pdf';
         $path = storage_path('app/pdf/' . $fileName);
         $data = ['quote' => $quote->load('client:id,name,surname,address,email', 'items')];

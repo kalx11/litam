@@ -113,7 +113,7 @@
     <div class="clearfix"></div>
     <div class="contenedor">
         <div style="float: left; line-height:1">
-            <div><span>Bogotá D.C. {{ Carbon\Carbon::parse($quote->created_at)->formatLocalized('%d %B %Y') }}  </span></div>
+            <div><span>Bogotá D.C. {{ Jenssegers\Date\Date::parse($quote->created_at)->format('j \d\e F \d\e Y') }}  </span></div>
             <div style="margin-top: 80px;">
                 <p><strong>Señor:</strong></p>
                 <p><strong>{{ $quote->client->name . ' ' . $quote->client->surname }}</strong></p>

@@ -112,7 +112,7 @@
         <div id="project">
             <div><span>CLIENTE</span> {{ $quote->client->name . ' ' . $quote->client->surname }}</div>
             <div><span>DIRECCIÓN</span> {{ $quote->client->address }}</div>
-            <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
+            <div><span>EMAIL</span> <a>{{ $quote->client->email }}</a></div>
             <div><span>FECHA</span> {{ Carbon\Carbon::parse($quote->created_at)->format('Y-m-d') }}</div>
         </div>
         <div id="company" class="clearfix">

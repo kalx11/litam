@@ -61,6 +61,9 @@
         }).catch(() => {
 
         });
+      },
+      open() {
+        this.$refs.dialog1.open();
       }
     }
   }

@@ -6,12 +6,14 @@ use App\Item;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemRequest;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Storage;
 
 class ItemController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('role:admin');
     }
 
     /**
@@ -91,5 +93,27 @@ class ItemController extends Controller
         if(Auth::user()->rol === 'admin') {
             return response()->json(['deleted' => $item->delete()], 200);
         }
+        return response()->json(['User has no permissions'], 401);
+    }
+
+    public function import(Request $request) {
+        $this->validate($request, [
+            'file' => 'required|file'
+        ]);
+        $path = $request->file->storeAs('excel', 'file.' . $request->file('file')->getClientOriginalExtension());
+        $path = storage_path('app/' . $path);
+        Excel::filter('chunk')->load($path)->chunk(200,function ($reader) {
+            $reader->each(function($row){
+                $data = [
+                    'name' => $row->nombre,
+                    'description' => $row->descripcion,
+                    'amount' => $row->cantidad,
+                    'cost' => $row->precio
+                ];
+                Item::create($data);
+            });
+        });
+        Storage::disk('local')->delete($path);
+        return response()->json(['imported' => true], 200);
     }
 }

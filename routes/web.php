@@ -68,4 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Invoices
 
     Route::get('invoices', 'InvoiceController@index');
+
+    // Importar
+    Route::post('items/upload', 'ItemController@import');
 });

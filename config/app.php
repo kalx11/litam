@@ -180,6 +180,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         ClickNow\Money\MoneyServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Date' => Jenssegers\Date\Date::class,
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
     ],
 

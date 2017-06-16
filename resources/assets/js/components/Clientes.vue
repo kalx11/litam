@@ -21,17 +21,19 @@
             <p class="control">
               <button class="button" @click.prevent="reload()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
-
+                <md-tooltip md-direction="top">Refrescar clientes</md-tooltip>
               </button>
             </p>
             <p class="control">
               <button class="button" @click.prevent="openDialog">
                 <i class="fa fa-plus" aria-hidden="true"></i>
+                <md-tooltip md-direction="top">Añadir cliente</md-tooltip>
               </button>
             </p>
             <p class="control">
               <button class="button" @click.prevent="isEditing = !isEditing">
                 <i class="fa" :class="isEditing ? 'fa-pencil-square' : 'fa-pencil-square-o'" aria-hidden="true"></i>
+                <md-tooltip md-direction="top">Editar fila</md-tooltip>
               </button>
             </p>
           </div>

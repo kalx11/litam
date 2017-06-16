@@ -7,7 +7,7 @@
         <users class="column is-12"></users>
         @endrole
         @role('vendedor')
-
+            <cotizaciones class="column is-12"></cotizaciones>
         @endrole
         
         </div>

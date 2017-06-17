@@ -156,6 +156,20 @@
         @endforeach
         </tbody>
     </table>
+    <table class="table" style="margin-bottom: 40px;">
+        <thead>
+            <tr>
+                <th>SUBTOTAL</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>@money($quote->subtotal, 'COP', true)</td>
+            <td>@money($quote->total_cost, 'COP', true)</td>
+        </tr>
+        </tbody>
+    </table>
     <h2>Los precios descritos en esta cotización Incluyen Iva.</h2>
     <p class="nota salto">
         Nota: Si require un Licenciamiento Corporativo de Microsoft que se expida a nombre del

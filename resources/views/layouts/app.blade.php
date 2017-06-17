@@ -63,9 +63,11 @@
                         <a href="{{ route('home') }}" class="nav-item is-active">
                             Inicio
                         </a>
+                        @role('admin')
                         <a href="{{ route('productos') }}" class="nav-item">
                             Productos
                         </a>
+                        @endrole
                         <a href="{{ route('clientes') }}" class="nav-item">
                             Clientes
                         </a>
